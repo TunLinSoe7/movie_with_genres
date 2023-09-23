@@ -11,6 +11,7 @@ class HomePageProvider extends ChangeNotifier{
   List<GenreVO>? getGenreList;
   List<MovieVO>? getMovieList;
   HomePageProvider(){
+    ///Get GenreList
     _movieModel.getGenreList();
     _movieModel.getGenreListFromDataBase().listen((event) {
       if (event != null && event.isNotEmpty) {
@@ -25,13 +26,14 @@ class HomePageProvider extends ChangeNotifier{
       getGenreList = event;
       notifyListeners();
     });
-
+  ///Get Movie By Genre From Database
     _movieModel.getMovieListFromDataBase(genreID ?? 0).listen((event) {
       print("genres====>${event?.length}");
       getMovieList = event;
       notifyListeners();
     });
   }
+  ///GenreSelected
   selectedGenre(GenreVO selectedGenre) {
     getGenreList = getGenreList?.map((e) {
       e.isSelected = (e.id ==selectedGenre.id);
